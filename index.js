@@ -1,5 +1,5 @@
 const http = require("http");
-const app = require("./route");
+const app = require("./routes");
 require("./config/database").connect();
 require("dotenv").config();
 const server = http.createServer(app);
