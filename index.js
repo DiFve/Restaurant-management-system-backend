@@ -1,12 +1,24 @@
-const http = require("http");
-const app = require("./routes");
-require("./config/database").connect();
+const express = require("express");
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+    next()
+  );
+});
+
+require("./routes/routes")(app);
 require("dotenv").config();
-const server = http.createServer(app);
+require("./config/database").connect();
 
 const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT;
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
