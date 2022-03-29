@@ -29,8 +29,11 @@ module.exports = {
           expiresIn: "1h",
         }
       );
-      user.token = token;
-      return res.status(201).json(user);
+      //user.token = token;
+      const userToken = {
+        token: token,
+      };
+      return res.status(201).json(userToken);
     } catch (error) {
       console.log(error);
     }
@@ -54,11 +57,14 @@ module.exports = {
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "1h",
+            expiresIn: "30s",
           }
         );
-        user.token = token;
-        return res.status(200).json(user);
+        //user.token = token;
+        const userToken = {
+          token: token,
+        };
+        return res.status(200).json(userToken);
       } else {
         res.status(409).send("Email or Password incorrect");
       }
@@ -67,6 +73,6 @@ module.exports = {
     }
   },
   home: async (req, res) => {
-    return res.status(200).json(req.user);
+    return res.status(200).send(req.user);
   },
 };

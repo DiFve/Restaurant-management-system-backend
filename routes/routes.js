@@ -9,7 +9,7 @@ module.exports = (app) => {
   app.post("/api/login", (req, res) =>
     controller.adminloginController.login(req, res)
   );
-  app.post("/api/home", auth, (req, res) =>
-    controller.adminloginController.home(req, res)
-  );
+  app.post("/api/home", auth, (req, res) => {
+    controller.adminloginController.home(req, res);
+  });
 };
