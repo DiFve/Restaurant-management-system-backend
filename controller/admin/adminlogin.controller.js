@@ -57,7 +57,7 @@ module.exports = {
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "30s",
+            expiresIn: "1h",
           }
         );
         //user.token = token;
@@ -74,5 +74,8 @@ module.exports = {
   },
   home: async (req, res) => {
     return res.status(200).send(req.user);
+  },
+  kuy: async (req, res) => {
+    return res.status(200).send("แม่มึงตาย");
   },
 };
