@@ -15,4 +15,7 @@ module.exports = (app) => {
     upload.single("image"),
     controller.menuController.addMenuPicture
   );
+  app.get("/api/getAllMenu", controller.menuController.getAllMenu);
+  app.get("/api/getAlacarteMenu", controller.menuController.getAlacarteMenu);
+  app.get("/api/getBuffetMenu", controller.menuController.getBuffetMenu);
 };

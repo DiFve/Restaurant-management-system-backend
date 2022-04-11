@@ -13,11 +13,43 @@ module.exports = {
         detail: detail,
       });
     } catch (error) {
-      console.log(error);
+      res.status(400).json({ message: error });
+      //console.log(error);
     }
     res.status(200).json({ message: "menu successfully added " });
   },
   addMenuPicture: async (req, res) => {
     res.status(200).json({ path: `images/${req.file.filename}` });
+  },
+  getAllMenu: async (req, res) => {
+    try {
+      const menu = await Foods.find();
+      res.status(200).json(menu);
+    } catch (error) {
+      console.log(error);
+      res.status(200).json({ message: error });
+    }
+  },
+  getAlacarteMenu: async (req, res) => {
+    try {
+      const menu = await Foods.find({
+        $or: [{ foodType: "a-la-carte" }, { foodType: "buffet a-la-carte" }],
+      });
+      res.status(200).json(menu);
+    } catch (error) {
+      console.log(error);
+      res.status(200).json({ message: error });
+    }
+  },
+  getBuffetMenu: async (req, res) => {
+    try {
+      const menu = await Foods.find({
+        $or: [{ foodType: "buffet" }, { foodType: "buffet a-la-carte" }],
+      });
+      res.status(200).json(menu);
+    } catch (error) {
+      console.log(error);
+      res.status(200).json({ message: error });
+    }
   },
 };
