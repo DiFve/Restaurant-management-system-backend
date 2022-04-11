@@ -5,7 +5,7 @@ const auth = require("../../middleware/auth");
 
 module.exports = {
   register: async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role, foodType } = req.body;
     try {
       if (!(email && password)) {
         return res.status(400).send("Required email and password.");
@@ -20,6 +20,8 @@ module.exports = {
       const user = await Users.create({
         email: email,
         password: hashPW,
+        role: role,
+        foodType: foodType,
       });
 
       const token = jwt.sign(
@@ -43,30 +45,31 @@ module.exports = {
       const { email, password } = req.body;
 
       if (!(email && password)) {
-        return res.status(400).send("Required email and password.");
+        return res
+          .status(400)
+          .json({ message: "Required email and password." });
       }
 
       const user = await Users.findOne({ email });
-
+      console.log(user);
       if (!user) {
-        return res.status(409).send("Email or Password incorrect");
+        return res.status(409).json({ message: "Email or Password incorrect" });
       }
 
-      if (bcrypt.compare(password, user.password)) {
+      if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "1h",
+            expiresIn: "10s",
           }
         );
-        //user.token = token;
         const userToken = {
           token: token,
         };
         return res.status(200).json(userToken);
       } else {
-        res.status(409).send("Email or Password incorrect");
+        res.status(409).json({ message: "Email or Password incorrect" });
       }
     } catch (error) {
       console.log(error);
@@ -74,8 +77,5 @@ module.exports = {
   },
   home: async (req, res) => {
     return res.status(200).send(req.user);
-  },
-  kuy: async (req, res) => {
-    return res.status(200).send("แม่มึงตาย");
   },
 };
