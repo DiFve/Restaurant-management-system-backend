@@ -52,4 +52,15 @@ module.exports = {
       res.status(200).json({ message: error });
     }
   },
+  getMenuByID: async (req, res) => {
+    const { id } = req.body;
+
+    try {
+      const menu = await Foods.findOne({ _id: id });
+
+      res.status(200).json({ menu });
+    } catch (error) {
+      return res.status(404).json({ message: "can't find this menu" });
+    }
+  },
 };
