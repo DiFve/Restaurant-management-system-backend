@@ -18,5 +18,5 @@ module.exports = (app) => {
   app.get("/api/getAllMenu", controller.menuController.getAllMenu);
   app.get("/api/getAlacarteMenu", controller.menuController.getAlacarteMenu);
   app.get("/api/getBuffetMenu", controller.menuController.getBuffetMenu);
-  app.get("/api/getMenuByID", controller.menuController.getMenuByID);
+  app.get("/api/getMenuByID/:id", controller.menuController.getMenuByID);
 };
