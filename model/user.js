@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "customer", "employee"],
   },
   foodType: { type: String, enum: ["buffet", "a-la-carte"] },
+  table: { type: Number },
+  token: { type: String },
 });
 
 const model = mongoose.model("users", userSchema);

@@ -19,11 +19,10 @@ const foodSchema = new mongoose.Schema({
   },
   detail: [
     {
-      //topic: {
       topicName: Object,
       choice: Object,
       option: [],
-      //},
+
       require: Object,
     },
   ],

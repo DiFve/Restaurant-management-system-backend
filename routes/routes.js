@@ -9,6 +9,7 @@ module.exports = (app) => {
   app.post("/api/login", controller.adminloginController.login);
   app.post("/api/auth", auth, controller.adminloginController.home);
 
+  //menu
   app.post("/api/addMenu", controller.menuController.addMenu);
   app.post(
     "/api/addMenuPicture",
@@ -19,4 +20,8 @@ module.exports = (app) => {
   app.get("/api/getAlacarteMenu", controller.menuController.getAlacarteMenu);
   app.get("/api/getBuffetMenu", controller.menuController.getBuffetMenu);
   app.get("/api/getMenuByID/:id", controller.menuController.getMenuByID);
+
+  //table
+  app.post("/api/makeTable", controller.tableController.makeTable);
+  app.get("/api/seeTable", controller.tableController.seeTable);
 };
