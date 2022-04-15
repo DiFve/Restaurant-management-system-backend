@@ -2,7 +2,8 @@ const Foods = require("../../model/food");
 
 module.exports = {
   addMenu: async (req, res) => {
-    const { foodName, type, image, foodType, description, detail } = req.body;
+    const { foodName, type, image, foodType, description, detail, price } =
+      req.body;
     try {
       const food = await Foods.create({
         foodName: foodName,
@@ -11,6 +12,7 @@ module.exports = {
         foodType: foodType,
         description: description,
         detail: detail,
+        price: price,
       });
     } catch (error) {
       res.status(400).json({ message: error });
