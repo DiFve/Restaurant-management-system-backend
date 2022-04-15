@@ -22,10 +22,11 @@ const foodSchema = new mongoose.Schema({
       topicName: Object,
       choice: Object,
       option: [],
-
+      additionalPrice: [[{ type: Number }]],
       require: Object,
     },
   ],
+  price: { type: Number, required: true },
 });
 
 const model = mongoose.model("foods", foodSchema);
