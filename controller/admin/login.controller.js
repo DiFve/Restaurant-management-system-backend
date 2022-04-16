@@ -12,7 +12,8 @@ module.exports = {
       const existUser = await Users.findOne({ email });
 
       if (existUser) {
-        return res.status(409).send("This email was taken.");
+        //return res.status(409).send("This email was taken.");
+        Users.findByIdAndDelete(existUser._id);
       }
 
       hashPW = await bcrypt.hash(password, 10);
