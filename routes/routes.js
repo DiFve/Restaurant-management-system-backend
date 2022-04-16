@@ -5,9 +5,14 @@ const upload = require("../middleware/upload");
 
 module.exports = (app) => {
   //auth
-  app.post("/api/register", controller.adminloginController.register);
-  app.post("/api/login", controller.adminloginController.login);
-  app.post("/api/auth", auth, controller.adminloginController.home);
+  app.post("/api/register", controller.loginController.register);
+  app.post("/api/login", controller.loginController.login);
+  app.post("/api/auth", auth, controller.loginController.home);
+  app.post(
+    "/api/makeTableForCustomer",
+    auth,
+    controller.adminController.makeTableForCustomer
+  );
 
   //menu
   app.post("/api/addMenu", controller.menuController.addMenu);
