@@ -1,11 +1,10 @@
 const bcrypt = require("bcryptjs");
 const Users = require("../../model/user");
 const jwt = require("jsonwebtoken");
-const auth = require("../../middleware/auth");
 
 module.exports = {
   register: async (req, res) => {
-    const { email, password, role, foodType } = req.body;
+    const { email, password, role, foodType, table } = req.body;
     try {
       if (!(email && password)) {
         return res.status(400).send("Required email and password.");
@@ -22,20 +21,22 @@ module.exports = {
         password: hashPW,
         role: role,
         foodType: foodType,
+        table: table,
       });
 
       const token = jwt.sign(
-        { user_id: user._id, email },
+        { user_id: user._id, email, role, foodType, table },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "1h",
+          expiresIn: "10s",
         }
       );
-      //user.token = token;
-      const userToken = {
-        token: token,
-      };
-      return res.status(201).json(userToken);
+      await Users.findByIdAndUpdate(user._id, { token: token });
+      if (user.table === 0) {
+        return res.status(201).json({ token: token });
+      } else {
+        return token;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,23 +52,27 @@ module.exports = {
       }
 
       const user = await Users.findOne({ email });
-      console.log(user);
+      //console.log(user);
       if (!user) {
         return res.status(409).json({ message: "Email or Password incorrect" });
       }
 
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign(
-          { user_id: user._id, email },
+          {
+            user_id: user._id,
+            email: user.email,
+            role: user.role,
+            foodType: user.foodType,
+            table: user.table,
+          },
           process.env.TOKEN_KEY,
           {
-            expiresIn: "10s",
+            expiresIn: "1h",
           }
         );
-        const userToken = {
-          token: token,
-        };
-        return res.status(200).json(userToken);
+        await Users.findByIdAndUpdate(user._id, { token: token });
+        return res.status(200).json({ token: token });
       } else {
         res.status(409).json({ message: "Email or Password incorrect" });
       }
