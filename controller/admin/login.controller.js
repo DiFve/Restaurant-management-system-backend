@@ -25,10 +25,16 @@ module.exports = {
       });
 
       const token = jwt.sign(
-        { user_id: user._id, email, role, foodType, table },
+        {
+          user_id: user._id,
+          email: user.email,
+          role: user.role,
+          foodType: user.foodType,
+          table: user.table,
+        },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "10s",
+          expiresIn: "1h",
         }
       );
       await Users.findByIdAndUpdate(user._id, { token: token });
