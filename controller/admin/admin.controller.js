@@ -16,7 +16,7 @@ module.exports = {
     const token = await register(req, res);
     //console.log(token);
 
-    const url = `https://frontend.manhermak.com/${req.body.foodType}/${token}`;
+    const url = `https://frontend.manhermak.com/auth/${token}`;
     await qr.toFile(
       `./public/images/qrcode/table${req.body.table}.png`,
       url,
