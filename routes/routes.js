@@ -24,4 +24,9 @@ module.exports = (app) => {
   //table
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
+  //order
+  app.put(
+    "/api/orderlist/makeorder/:id",
+    controller.orderController.makeOrderLists
+  );
 };
