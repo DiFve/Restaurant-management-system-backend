@@ -1,5 +1,5 @@
 const Foods = require("../../model/food");
-
+const Foodtypes = require("../../model/foodtype");
 module.exports = {
   addMenu: async (req, res) => {
     const { foodName, type, image, foodType, description, detail, price } =
@@ -64,5 +64,22 @@ module.exports = {
     } catch (error) {
       return res.status(404).json({ message: "can't find this menu" });
     }
+  },
+  getFoodType: async (req, res) => {
+    try {
+      const allfoodtype = await Foodtypes.findById("625dc2c3120628138b272c1b");
+      res.status(200).json(allfoodtype.type);
+    } catch (error) {}
+  },
+  addFoodType: async (req, res) => {
+    const { foodtype } = req.body;
+    try {
+      await Foodtypes.findByIdAndUpdate("625dc2c3120628138b272c1b", {
+        $push: {
+          type: foodtype,
+        },
+      });
+      res.status(200).json({ message: "type added" });
+    } catch (error) {}
   },
 };
