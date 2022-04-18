@@ -16,11 +16,11 @@ module.exports = {
         detail: orderList,
       });
       // // console.log(orderlist._id);
-      // const table = await Tables.create({
-      //   tableNumber: tableNumber,
-      //   tableType: tableType,
-      //   orderList: orderlist._id,
-      // });
+      const table = await Tables.create({
+        tableNumber: tableNumber,
+        tableType: tableType,
+        orderList: orderlist._id,
+      });
       //console.log(table);
 
       //return res.status(200).json({ message: "Table created" });
@@ -33,5 +33,16 @@ module.exports = {
   seeTable: async (req, res) => {
     const table = await Tables.find({}).populate({ path: "orderList" });
     res.status(200).json(table);
+  },
+  addOrderlist: async (req, res) => {
+    const { orderID, detail } = req.body;
+    try {
+      const orderDetail = await Orderlists.findById(orderID);
+      console.log(orderDetail);
+      await Orderlists.findByIdAndUpdate(orderID, {
+        $push: { detail: detail },
+      });
+      res.status(200).json(orderDetail);
+    } catch (error) {}
   },
 };
