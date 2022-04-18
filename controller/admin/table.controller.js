@@ -6,26 +6,15 @@ module.exports = {
     const { tableNumber, tableType, orderList } = req.body;
     console.log(orderList);
     try {
-      // const orderlist = await Orderlists.create({
-      //   foodID: orderList.foodID,
-      //   quantity: orderList.quantity,
-      //   foodStatus: orderList.foodStatus,
-      // });
-      // console.log(orderList);
       const orderlist = await Orderlists.create({
         detail: orderList,
       });
-      // // console.log(orderlist._id);
       const table = await Tables.create({
         tableNumber: tableNumber,
         tableType: tableType,
         orderList: orderlist._id,
       });
-      //console.log(table);
-
-      //return res.status(200).json({ message: "Table created" });
       return res.status(200).send("tableNumber");
-      return;
     } catch (error) {
       return console.log(error);
     }
@@ -36,13 +25,20 @@ module.exports = {
   },
   addOrderlist: async (req, res) => {
     const { orderID, detail } = req.body;
+    const id = req.params.id;
+    const table = await Tables.findOne({ tableNumber: id });
+    const { tableNumber, tableType, orderList } = table;
+    console.log(table.orderList);
     try {
-      const orderDetail = await Orderlists.findById(orderID);
-      console.log(orderDetail);
-      await Orderlists.findByIdAndUpdate(orderID, {
+      const orderDetail = await Orderlists.findById(orderList);
+      //const { orderID, detail } = orderDetail;
+      const newOrder = await Orderlists.findByIdAndUpdate(orderList._id, {
         $push: { detail: detail },
       });
-      res.status(200).json(orderDetail);
-    } catch (error) {}
+      console.log(newOrder);
+      res.status(200).json(newOrder);
+    } catch (error) {
+      res.status(400).json({ message: error });
+    }
   },
 };
