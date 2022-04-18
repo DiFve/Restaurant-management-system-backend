@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 
 const foodSchema = new mongoose.Schema({
   foodName: { type: String, required: true, trim: true },
-  type: {
-    type: String,
-    enum: ["pork", "beef", "chicken", "drink", "seafood", "etc"],
-    required: true,
-  },
+  type: [
+    {
+      type: String,
+      enum: ["pork", "beef", "chicken", "drink", "seafood", "etc", "fav"],
+      required: true,
+    },
+  ],
   image: {
     type: String,
   },
