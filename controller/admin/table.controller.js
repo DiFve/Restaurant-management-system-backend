@@ -23,6 +23,15 @@ module.exports = {
     const table = await Tables.find({}).populate({ path: "orderList" });
     res.status(200).json(table);
   },
+  seeTableByID: async (req, res) => {
+    const { _id } = req.body;
+    try {
+      const data = await Tables.findById(_id).populate({
+        path: "orderList",
+      });
+      res.status(200).json(data);
+    } catch (error) {}
+  },
   //order
   addOrderlist: async (req, res) => {
     const { orderID, detail } = req.body;
