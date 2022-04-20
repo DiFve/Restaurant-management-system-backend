@@ -24,7 +24,7 @@ module.exports = {
     res.status(200).json(table);
   },
   seeTableByID: async (req, res) => {
-    const { _id } = req.body;
+    const _id = req.params.id;
     try {
       const data = await Tables.findById(_id).populate({
         path: "orderList",
