@@ -32,4 +32,5 @@ module.exports = (app) => {
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.put("/api/addOrderlist/:id", controller.tableController.addOrderlist);
+  app.get("/api/seeTableByID", controller.tableController.seeTableByID);
 };
