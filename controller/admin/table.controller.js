@@ -65,15 +65,15 @@ module.exports = {
           }
         }
       }
-      // comingOrder.sort((a, b) => {
-      //   if (a.time < b.time) {
-      //     return 1;
-      //   }
-      //   if (a.time > b.time) {
-      //     return -1;
-      //   }
-      //   return 0;
-      // });
+      comingOrder.sort((a, b) => {
+        if (a.time < b.time) {
+          return 1;
+        }
+        if (a.time > b.time) {
+          return -1;
+        }
+        return 0;
+      });
       console.log(comingOrder);
       res.status(200).json(comingOrder);
     } catch (error) {
