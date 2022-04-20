@@ -5,8 +5,24 @@ const orderlistSchema = new mongoose.Schema({
     {
       foodID: { type: String },
       quantity: { type: Number, default: 0 },
-      foodStatus: { type: String, enum: ["success", "fail"] },
+      foodStatus: {
+        type: String,
+        enum: ["success", "cooking", "fail"],
+        default: "cooking",
+      },
+
+      time: { type: Date, default: Date.now },
+      detail: [
+        {
+          topicName: [String],
+          choice: [String],
+          option: [String],
+          additionalPrice: Number,
+        },
+      ],
+      //timestamps: true,
     },
+    {},
   ],
 });
 
