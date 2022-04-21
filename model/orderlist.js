@@ -17,7 +17,7 @@ const orderlistSchema = new mongoose.Schema({
           topicName: [String],
           choice: [String],
           option: [String],
-          additionalPrice: Number,
+          Price: Number,
         },
       ],
       //timestamps: true,

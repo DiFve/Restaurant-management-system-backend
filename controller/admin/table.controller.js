@@ -96,4 +96,17 @@ module.exports = {
       res.status(400).json({ message: error });
     }
   },
+  cashTable: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const table = await Tables.findOne({ tableNumber: id });
+      var money = 0;
+      order = await Orderlists.findById(table.orderList);
+      const food = await Foods.find({});
+      for (i = 0; i < order.detail.length; i++) {
+        money = money + order.detail[i].Price;
+      }
+      res.status.json(money);
+    } catch (error) {}
+  },
 };
