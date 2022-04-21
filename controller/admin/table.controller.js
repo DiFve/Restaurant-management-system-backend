@@ -1,6 +1,6 @@
 const Orderlists = require("../../model/orderlist");
 const Tables = require("../../model/table");
-
+const Foods = require("../../model/food");
 module.exports = {
   makeTable: async (req, res) => {
     const { tableNumber, tableType, orderList } = req.body;
@@ -23,6 +23,7 @@ module.exports = {
     const table = await Tables.find({}).populate({ path: "orderList" });
     res.status(200).json(table);
   },
+
   seeTableByID: async (req, res) => {
     const _id = req.params.id;
     try {
@@ -40,8 +41,6 @@ module.exports = {
     const { tableNumber, tableType, orderList } = table;
     console.log(table.orderList);
     try {
-      const orderDetail = await Orderlists.findById(orderList);
-      //const { orderID, detail } = orderDetail;
       const newOrder = await Orderlists.findByIdAndUpdate(orderList._id, {
         $push: { detail: detail },
       });
@@ -54,10 +53,17 @@ module.exports = {
   seeOrderTable: async (req, res) => {
     const id = req.params.id;
     const table = await Tables.findOne({ tableNumber: id });
+    var orderTable = [];
     try {
       const order = await Orderlists.findById(table.orderList);
-      console.log(order.detail);
-      res.status(200).json(order.detail);
+      const food = await Foods.find({});
+      for (i = 0; i < order.detail.length; i++) {
+        var _food = await Foods.findById(order.detail[i].foodID);
+        //var jsont = JSON.stringify(order.detail[i]);
+        orderTable.push(order.detail[i] + _food);
+      }
+
+      res.status(200).json(orderTable);
     } catch (error) {
       res.status(400).json({ message: error });
     }
@@ -70,7 +76,8 @@ module.exports = {
         for (j = 0; j < order[i].detail.length; j++) {
           console.log(order[i].detail[j].foodStatus);
           if (order[i].detail[j].foodStatus === "cooking") {
-            comingOrder.push(order[i].detail[j]);
+            var _food = await Foods.findById(order[i].detail[j].foodID);
+            comingOrder.push(order[i].detail[j] + _food);
           }
         }
       }
@@ -88,5 +95,18 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ message: error });
     }
+  },
+  cashTable: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const table = await Tables.findOne({ tableNumber: id });
+      var money = 0;
+      order = await Orderlists.findById(table.orderList);
+      const food = await Foods.find({});
+      for (i = 0; i < order.detail.length; i++) {
+        money = money + order.detail[i].Price;
+      }
+      res.status.json(money);
+    } catch (error) {}
   },
 };
