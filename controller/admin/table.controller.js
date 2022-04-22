@@ -68,9 +68,9 @@ module.exports = {
       for (i = 0; i < order.detail.length; i++) {
         var _food = await Foods.findById(order.detail[i].foodID);
         var _product = JSON.stringify(order.detail[i]) + JSON.stringify(_food);
-        //var _product = JSON.parse(product);
-        console.log(_product);
-        orderTable.push(_product);
+        var product = JSON.parse(product);
+        console.log(product);
+        orderTable.push(product);
       }
       res.status(200).json(orderTable);
     } catch (error) {
