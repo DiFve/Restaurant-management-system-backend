@@ -10,7 +10,6 @@ const orderlistSchema = new mongoose.Schema({
         enum: ["success", "cooking", "fail"],
         default: "cooking",
       },
-
       time: { type: Date, default: Date.now },
       detail: [
         {
@@ -20,7 +19,7 @@ const orderlistSchema = new mongoose.Schema({
           Price: Number,
         },
       ],
-      //timestamps: true,
+      //ontime: { type: String, eum: ["now", "part"], default: "now" },
     },
     {},
   ],

@@ -3,8 +3,7 @@ const Tables = require("../../model/table");
 const Foods = require("../../model/food");
 module.exports = {
   makeTable: async (req, res) => {
-    const { tableNumber, tableType, orderList, status, personAmount } =
-      req.body;
+    const { tableNumber, tableType, orderList, status } = req.body;
     console.log(orderList);
     try {
       const orderlist = await Orderlists.create({
@@ -15,7 +14,6 @@ module.exports = {
         tableType: tableType,
         orderList: orderlist._id,
         status: status,
-        personAmount: personAmount,
       });
       return res.status(200).send("tableNumber");
     } catch (error) {
@@ -65,14 +63,15 @@ module.exports = {
     const table = await Tables.findOne({ tableNumber: id });
     var orderTable = [];
     try {
-      const order = await Orderlists.findById(table.orderList);
-      const food = await Foods.find({});
+      const _order = await Orderlists.findById(table.orderList);
+      const order = await Orderlists.findOne({ ontime: "now" });
       for (i = 0; i < order.detail.length; i++) {
         var _food = await Foods.findById(order.detail[i].foodID);
-        //var jsont = JSON.stringify(order.detail[i]);
-        orderTable.push(order.detail[i] + _food);
+        var _product = JSON.stringify(order.detail[i]) + JSON.stringify(_food);
+        //var _product = JSON.parse(product);
+        console.log(_product);
+        orderTable.push(_product);
       }
-
       res.status(200).json(orderTable);
     } catch (error) {
       res.status(400).json({ message: error });
@@ -80,7 +79,8 @@ module.exports = {
   },
   inComingOrder: async (req, res) => {
     try {
-      const order = await Orderlists.find({});
+      const _order = await Orderlists.find({});
+      const order = await Orderlists.findOne({ ontime: "now" });
       var comingOrder = [];
       for (i = 0; i < order.length; i++) {
         for (j = 0; j < order[i].detail.length; j++) {
@@ -116,10 +116,7 @@ module.exports = {
       for (i = 0; i < order.detail.length; i++) {
         money = money + order.detail[i].Price;
       }
-      await Tables.findOneAndUpdate(
-        { tableNumber: id },
-        { status: "available", personAmount: 0, tableType: "none" }
-      );
+
       res.status.json(money);
     } catch (error) {}
   },

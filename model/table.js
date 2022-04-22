@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Orderlists = require("./orderlist");
 const { Schema } = mongoose;
 const tableSchema = new mongoose.Schema({
   tableNumber: { type: Number, required: true, unique: true },
