@@ -65,13 +65,11 @@ module.exports = {
     try {
       const _order = await Orderlists.findById(table.orderList);
       const order = await Orderlists.findOne({ ontime: "now" });
-      //const food = await Foods.find({});
       for (i = 0; i < order.detail.length; i++) {
         var _food = await Foods.findById(order.detail[i].foodID);
-        //var jsont = JSON.stringify(order.detail[i]);
         orderTable.push(order.detail[i] + _food);
       }
-
+      //const jsont = JSON.stringify(orderTable);
       res.status(200).json(orderTable);
     } catch (error) {
       res.status(400).json({ message: error });
@@ -106,18 +104,18 @@ module.exports = {
       res.status(400).json({ message: error });
     }
   },
-  // cashTable: async (req, res) => {
-  //   try {
-  //     const id = req.params.id;
-  //     const table = await Tables.findOne({ tableNumber: id });
-  //     var money = 0;
-  //     order = await Orderlists.findById(table.orderList);
-  //     const food = await Foods.find({});
-  //     for (i = 0; i < order.detail.length; i++) {
-  //       money = money + order.detail[i].Price;
-  //     }
+  cashTable: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const table = await Tables.findOne({ tableNumber: id });
+      var money = 0;
+      order = await Orderlists.findById(table.orderList);
+      const food = await Foods.find({});
+      for (i = 0; i < order.detail.length; i++) {
+        money = money + order.detail[i].Price;
+      }
 
-  //     res.status.json(money);
-  //   } catch (error) {}
-  // },
+      res.status.json(money);
+    } catch (error) {}
+  },
 };
