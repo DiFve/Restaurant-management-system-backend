@@ -116,7 +116,10 @@ module.exports = {
       for (i = 0; i < order.detail.length; i++) {
         money = money + order.detail[i].Price;
       }
-
+      await Tables.findOneAndUpdate(
+        { tableNumber: id },
+        { status: "available", personAmount: 0, tableType: "none" }
+      );
       res.status.json(money);
     } catch (error) {}
   },
