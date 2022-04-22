@@ -13,7 +13,8 @@ module.exports = {
 
       if (existUser) {
         //return res.status(409).send("This email was taken.");
-        Users.findByIdAndDelete(existUser._id);
+
+        await Users.findByIdAndDelete(existUser._id);
       }
 
       hashPW = await bcrypt.hash(password, 10);

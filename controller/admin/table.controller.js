@@ -3,7 +3,8 @@ const Tables = require("../../model/table");
 const Foods = require("../../model/food");
 module.exports = {
   makeTable: async (req, res) => {
-    const { tableNumber, tableType, orderList, status } = req.body;
+    const { tableNumber, tableType, orderList, status, personAmount } =
+      req.body;
     console.log(orderList);
     try {
       const orderlist = await Orderlists.create({
@@ -14,6 +15,7 @@ module.exports = {
         tableType: tableType,
         orderList: orderlist._id,
         status: status,
+        personAmount: personAmount,
       });
       return res.status(200).send("tableNumber");
     } catch (error) {
@@ -114,7 +116,10 @@ module.exports = {
       for (i = 0; i < order.detail.length; i++) {
         money = money + order.detail[i].Price;
       }
-
+      await Tables.findOneAndUpdate(
+        { tableNumber: id },
+        { status: "available", personAmount: 0, tableType: "none" }
+      );
       res.status.json(money);
     } catch (error) {}
   },
