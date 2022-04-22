@@ -63,8 +63,9 @@ module.exports = {
     const table = await Tables.findOne({ tableNumber: id });
     var orderTable = [];
     try {
-      const order = await Orderlists.findById(table.orderList);
-      const food = await Foods.find({});
+      const _order = await Orderlists.findById(table.orderList);
+      const order = await Orderlists.findOne({ ontime: "now" });
+      //const food = await Foods.find({});
       for (i = 0; i < order.detail.length; i++) {
         var _food = await Foods.findById(order.detail[i].foodID);
         //var jsont = JSON.stringify(order.detail[i]);
@@ -78,7 +79,8 @@ module.exports = {
   },
   inComingOrder: async (req, res) => {
     try {
-      const order = await Orderlists.find({});
+      const _order = await Orderlists.find({});
+      const order = await Orderlists.findOne({ ontime: "now" });
       var comingOrder = [];
       for (i = 0; i < order.length; i++) {
         for (j = 0; j < order[i].detail.length; j++) {
@@ -104,18 +106,18 @@ module.exports = {
       res.status(400).json({ message: error });
     }
   },
-  cashTable: async (req, res) => {
-    try {
-      const id = req.params.id;
-      const table = await Tables.findOne({ tableNumber: id });
-      var money = 0;
-      order = await Orderlists.findById(table.orderList);
-      const food = await Foods.find({});
-      for (i = 0; i < order.detail.length; i++) {
-        money = money + order.detail[i].Price;
-      }
+  // cashTable: async (req, res) => {
+  //   try {
+  //     const id = req.params.id;
+  //     const table = await Tables.findOne({ tableNumber: id });
+  //     var money = 0;
+  //     order = await Orderlists.findById(table.orderList);
+  //     const food = await Foods.find({});
+  //     for (i = 0; i < order.detail.length; i++) {
+  //       money = money + order.detail[i].Price;
+  //     }
 
-      res.status.json(money);
-    } catch (error) {}
-  },
+  //     res.status.json(money);
+  //   } catch (error) {}
+  // },
 };
