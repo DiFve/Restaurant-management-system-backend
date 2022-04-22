@@ -5,7 +5,7 @@ const tableSchema = new mongoose.Schema({
   tableNumber: { type: Number, required: true },
   tableType: { type: String, required: true, enum: ["buffet", "a-la-carte"] },
   orderList: { type: Schema.Types.ObjectId, ref: "orderlists" },
-  status: { type: String, enum: ["avaliable", "busy"] },
+  status: { type: String, enum: ["available", "busy"] },
 });
 
 const model = mongoose.model("tables", tableSchema);
