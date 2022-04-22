@@ -67,9 +67,11 @@ module.exports = {
       const order = await Orderlists.findOne({ ontime: "now" });
       for (i = 0; i < order.detail.length; i++) {
         var _food = await Foods.findById(order.detail[i].foodID);
-        orderTable.push(order.detail[i] + _food);
+        var _product = JSON.stringify(order.detail[i]) + JSON.stringify(_food);
+        //var _product = JSON.parse(product);
+        console.log(_product);
+        orderTable.push(_product);
       }
-      //const jsont = JSON.stringify(orderTable);
       res.status(200).json(orderTable);
     } catch (error) {
       res.status(400).json({ message: error });
