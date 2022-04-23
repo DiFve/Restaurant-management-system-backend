@@ -33,21 +33,24 @@ module.exports = {
     //console.log(order.order[0].detail);
 
     const orderlist = await Orderlists.find({});
-    //console.log(order);
+    var edit = orderlist[0].order;
     for (i = 0; i < orderlist.length; i++) {
       for (j = 0; j < orderlist[i].order.length; j++) {
         for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
           if (orderlist[i].order[j].detail[k]._id == _id) {
             orderlist[i].order[j].detail[k].foodStatus = "success";
+
             //console.log(orderlist[i].order[j].detail[k]);
-            orderID = orderlist[i].order[j]._id;
+            orderID = orderlist[i]._id;
             break;
           }
         }
       }
     }
-
-    //console.log(orderlist);
+    console.log(edit);
+    const test = await Orderlists.findByIdAndUpdate(orderID);
+    console.log(test);
+    console.log(orderID);
     res.status(200).json(orderlist);
   },
 };
