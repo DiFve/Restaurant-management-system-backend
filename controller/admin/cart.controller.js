@@ -9,12 +9,20 @@ module.exports = {
     const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-
-      const newOrder = await Cart.findByIdAndUpdate(table.cart, {
-        $push: { detail: detail },
-      });
-      res.status(200).send("add to cart");
-      res.status(200).json(newOrder);
+      const food = await Foods.findById(detail.foodID);
+      //res.status(400).json(food.status);
+      // if (food.status == "OutofStock") {
+      //   console.log(food.status);
+      // }
+      if (food.status == "InStock") {
+        console.log(food.status);
+        await Cart.findByIdAndUpdate(table.cart, {
+          $push: { detail: detail },
+        });
+        res.status(200).send("add to cart");
+      } else if (food.status == "OutofStock") {
+        res.status(409).send("out od stock");
+      }
     } catch (err) {}
   },
   getAllItemInCart: async (req, res) => {
