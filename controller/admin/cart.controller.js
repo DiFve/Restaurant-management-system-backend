@@ -10,10 +10,7 @@ module.exports = {
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
       const food = await Foods.findById(detail.foodID);
-      //res.status(400).json(food.status);
-      // if (food.status == "OutofStock") {
-      //   console.log(food.status);
-      // }
+
       if (food.status == "InStock") {
         console.log(food.status);
         await Cart.findByIdAndUpdate(table.cart, {
@@ -34,7 +31,15 @@ module.exports = {
 
       const newOrder = await Cart.findById(table.cart);
 
-      res.status(200).json(newOrder);
+      res
+        .status(200)
+        .json(newOrder)
+        .header({
+          "Access-Control-Allow-Origin": [
+            "http://localhost:3000",
+            "https://frontend.manhermak.com",
+          ],
+        });
     } catch (err) {}
   },
   deleteItemInCart: async (req, res) => {
