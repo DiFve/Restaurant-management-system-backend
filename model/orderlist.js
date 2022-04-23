@@ -23,11 +23,11 @@ const orderlistSchema = new mongoose.Schema({
           ],
         },
       ],
-      orderStatus: {
-        type: String,
-        enum: ["success", "cooking", "fail"],
-        default: "cooking",
-      },
+      // orderStatus: {
+      //   type: String,
+      //   enum: ["success", "cooking", "fail"],
+      //   default: "cooking",
+      // },
     },
   ],
 });
