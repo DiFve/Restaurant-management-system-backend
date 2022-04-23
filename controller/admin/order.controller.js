@@ -50,7 +50,7 @@ module.exports = {
     console.log(edit);
     const test = await Orderlists.findByIdAndUpdate(orderID);
     console.log(test);
-    console.log(orderID);
+    //console.log(orderID);
     res.status(200).json(orderlist);
   },
 };
