@@ -28,9 +28,9 @@ module.exports = {
   },
   updateFoodStatus: async (req, res) => {
     const { _id, status } = req.body;
-    const order = await Orderlists.findOne({
-      order: { detail: { _id: _id } },
-    });
+    const order = await Orderlists.findOne({ _id: _id });
+    console.log(order);
+
     // await Orderlists.findOneAndUpdate(
     //     { order: { detail: { _id: _id } } },
     //     { order: { detail: { foodStatus: status } } }
@@ -46,7 +46,7 @@ module.exports = {
     //     }
     //   }
     // }
-    console.log(order.foodStatus);
-    res.status(200).json(order.foodStatus);
+
+    res.status(200).json(order);
   },
 };

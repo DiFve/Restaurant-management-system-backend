@@ -10,6 +10,7 @@ module.exports = {
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
 
+      console.log(detail);
       const newOrder = await Cart.findByIdAndUpdate(table.cart, {
         $push: { detail: detail },
       });
