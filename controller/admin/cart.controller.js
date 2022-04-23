@@ -11,10 +11,7 @@ module.exports = {
       const table = await Tables.findOne({ tableNumber: tableNumber });
 
       const food = await Foods.findById(detail.foodID);
-      //res.status(400).json(food.status);
-      // if (food.status == "OutofStock") {
-      //   console.log(food.status);
-      // }
+
       if (food.status == "InStock") {
         console.log(food.status);
         await Cart.findByIdAndUpdate(table.cart, {
@@ -27,7 +24,6 @@ module.exports = {
     } catch (err) {
       res.status(404).send("error");
     }
-
   },
   getAllItemInCart: async (req, res) => {
     const tableNumber = req.params.tableNumber;
@@ -61,7 +57,7 @@ module.exports = {
 
       const thisOrderList = await Orderlists.findByIdAndUpdate(
         table.orderList,
-        { $push: { order: thisCart.detail } }
+        { $push: { order: thisCart } }
       );
 
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });

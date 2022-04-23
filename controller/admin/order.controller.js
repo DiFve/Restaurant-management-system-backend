@@ -28,25 +28,26 @@ module.exports = {
   },
   updateFoodStatus: async (req, res) => {
     const { _id, status } = req.body;
-    const order = await Orderlists.findOne({ _id: _id });
-    console.log(order);
+    //const order = await Orderlists.findOneAndUpdate({ _id: _id }, { order: {order:{detail: }} });
+    //const order = await Orderlists.findById(_id);
+    //console.log(order.order[0].detail);
 
-    // await Orderlists.findOneAndUpdate(
-    //     { order: { detail: { _id: _id } } },
-    //     { order: { detail: { foodStatus: status } } }
-    //   );
+    const orderlist = await Orderlists.find({});
+    //console.log(order);
+    for (i = 0; i < orderlist.length; i++) {
+      for (j = 0; j < orderlist[i].order.length; j++) {
+        for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
+          if (orderlist[i].order[j].detail[k]._id == _id) {
+            orderlist[i].order[j].detail[k].foodStatus = "success";
+            //console.log(orderlist[i].order[j].detail[k]);
+            orderID = orderlist[i].order[j]._id;
+            break;
+          }
+        }
+      }
+    }
 
-    // for (i = 0; i < orderlist.length; i++) {
-    //   for (j = 0; j < orderlist[i].order.length; j++) {
-    //     for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
-    //       if (orderlist[i].order[j].detail[k]._id == _id) {
-    //         orderlist[i].order[j].detail[k].foodStatus = "success";
-    //         console.log(orderlist[i].order[j].detail[k]);
-    //       }
-    //     }
-    //   }
-    // }
-
-    res.status(200).json(order);
+    //console.log(orderlist);
+    res.status(200).json(orderlist);
   },
 };
