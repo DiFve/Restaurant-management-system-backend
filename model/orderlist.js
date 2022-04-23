@@ -7,6 +7,7 @@ const orderlistSchema = new mongoose.Schema({
         {
           foodID: { type: String },
           quantity: { type: Number, default: 0 },
+          additionalInfo: { type: String },
           time: { type: Date, default: Date.now },
           foodStatus: {
             type: String,
