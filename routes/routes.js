@@ -32,13 +32,6 @@ module.exports = (app) => {
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.get("/api/seeTableByID/:id", controller.tableController.seeTableByID);
-  //app.get("/api/deleteTable/:id", controller.tableController.deleteTable);
-
-  //order
-  //app.put("/api/addOrderlist/:id", controller.tableController.addOrderlist);
-  app.get("/api/seeOrderTable/:id", controller.tableController.seeOrderTable);
-  app.get("/api/comingOrder", controller.tableController.inComingOrder);
-  // app.get("/api/cashTable/:id", controller.tableController.cashTable);
 
   //cart
   app.put(
@@ -57,4 +50,11 @@ module.exports = (app) => {
     "/api/confirmItemInCart/:tableNumber",
     controller.cartController.confirmItemInCart
   );
+
+  //orderlist
+  app.get(
+    "/api/seeOrderTable/:tableNumber",
+    controller.orderListController.seeOrderTable
+  );
+  app.get("/api/comingOrder", controller.orderListController.inComingOrder);
 };
