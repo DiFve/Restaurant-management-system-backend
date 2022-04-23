@@ -9,6 +9,7 @@ module.exports = {
     const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
+
       const food = await Foods.findById(detail.foodID);
       //res.status(400).json(food.status);
       // if (food.status == "OutofStock") {
@@ -26,6 +27,7 @@ module.exports = {
     } catch (err) {
       res.status(404).send("error");
     }
+
   },
   getAllItemInCart: async (req, res) => {
     const tableNumber = req.params.tableNumber;

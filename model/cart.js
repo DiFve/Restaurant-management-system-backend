@@ -4,15 +4,13 @@ const cartSchema = new mongoose.Schema({
   detail: [
     {
       foodID: { type: String },
-      //tableNumber: { type: Number, required: true },
+      price: Number,
       quantity: { type: Number, default: 0 },
       time: { type: Date, default: Date.now },
       detail: [
         {
-          topicName: [String],
-          choice: [String],
+          topicName: String,
           option: [String],
-          Price: Number,
         },
       ],
     },
