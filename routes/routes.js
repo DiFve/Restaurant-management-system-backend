@@ -57,4 +57,8 @@ module.exports = (app) => {
     controller.orderListController.seeOrderTable
   );
   app.get("/api/comingOrder", controller.orderListController.inComingOrder);
+  app.get(
+    "/api/updateFoodStatus",
+    controller.orderListController.updateFoodStatus
+  );
 };
