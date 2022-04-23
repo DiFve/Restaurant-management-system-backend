@@ -21,16 +21,15 @@ const orderlistSchema = new mongoose.Schema({
               Price: Number,
             },
           ],
-          //ontime: { type: String, eum: ["now", "part"], default: "now" },
         },
       ],
+      orderStatus: {
+        type: String,
+        enum: ["success", "cooking", "fail"],
+        default: "cooking",
+      },
     },
   ],
-  orderStatus: {
-    type: String,
-    enum: ["success", "cooking", "fail"],
-    default: "cooking",
-  },
 });
 
 const Orderlists = mongoose.model("orderlists", orderlistSchema);

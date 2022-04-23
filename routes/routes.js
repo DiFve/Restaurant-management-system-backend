@@ -33,9 +33,21 @@ module.exports = (app) => {
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.get("/api/seeTableByID/:id", controller.tableController.seeTableByID);
   //app.get("/api/deleteTable/:id", controller.tableController.deleteTable);
+
   //order
-  app.put("/api/addOrderlist/:id", controller.tableController.addOrderlist);
+  //app.put("/api/addOrderlist/:id", controller.tableController.addOrderlist);
   app.get("/api/seeOrderTable/:id", controller.tableController.seeOrderTable);
   app.get("/api/comingOrder", controller.tableController.inComingOrder);
   // app.get("/api/cashTable/:id", controller.tableController.cashTable);
+
+  //cart
+  app.get("/api/addItemToCart/:id", controller.cartController.addItemToCart);
+  app.get(
+    "/api/getAllItemInCart/:id",
+    controller.cartController.getAllItemInCart
+  );
+  app.delete(
+    "/api/deleteItemInCart/:id",
+    controller.cartController.deleteItemInCart
+  );
 };

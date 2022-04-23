@@ -1,21 +1,26 @@
 const Orderlists = require("../../model/orderlist");
 const Tables = require("../../model/table");
 const Foods = require("../../model/food");
+const Cart = require("../../model/cart");
+
 module.exports = {
   makeTable: async (req, res) => {
-    const { tableNumber, tableType, orderList, status } = req.body;
-    console.log(orderList);
+    const { tableNumber, tableType, orderList, cart, status } = req.body;
     try {
       const orderlist = await Orderlists.create({
-        detail: orderList,
+        //detail: orderList,
+      });
+      const cart = await Cart.create({
+        //detail: { tableNumber: tableNumber },
       });
       const table = await Tables.create({
         tableNumber: tableNumber,
         tableType: tableType,
         orderList: orderlist._id,
+        cart: cart._id,
         status: status,
       });
-      return res.status(200).send("tableNumber");
+      return res.status(200).send("tableCreate");
     } catch (error) {
       return console.log(error);
     }
@@ -42,7 +47,8 @@ module.exports = {
     } catch (error) {}
   },
   //order
-  addOrderlist: async (req, res) => {
+
+  addOrder: async (req, res) => {
     const { orderID, detail } = req.body;
     const id = req.params.id;
     const table = await Tables.findOne({ tableNumber: id });
