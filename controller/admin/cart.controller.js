@@ -23,7 +23,9 @@ module.exports = {
       } else if (food.status == "OutofStock") {
         res.status(409).send("out od stock");
       }
-    } catch (err) {}
+    } catch (err) {
+      res.status(404).send("error");
+    }
   },
   getAllItemInCart: async (req, res) => {
     const tableNumber = req.params.tableNumber;
