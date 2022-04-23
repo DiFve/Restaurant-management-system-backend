@@ -32,7 +32,15 @@ module.exports = {
 
       const newOrder = await Cart.findById(table.cart);
 
-      res.status(200).json(newOrder);
+      res
+        .status(200)
+        .json(newOrder)
+        .header({
+          "Access-Control-Allow-Origin": [
+            "http://localhost:3000",
+            "https://frontend.manhermak.com",
+          ],
+        });
     } catch (err) {}
   },
   deleteItemInCart: async (req, res) => {
