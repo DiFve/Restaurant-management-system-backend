@@ -41,13 +41,20 @@ module.exports = (app) => {
   // app.get("/api/cashTable/:id", controller.tableController.cashTable);
 
   //cart
-  app.get("/api/addItemToCart/:id", controller.cartController.addItemToCart);
+  app.put(
+    "/api/addItemToCart/:tableNumber",
+    controller.cartController.addItemToCart
+  );
   app.get(
-    "/api/getAllItemInCart/:id",
+    "/api/getAllItemInCart/:tableNumber",
     controller.cartController.getAllItemInCart
   );
   app.delete(
-    "/api/deleteItemInCart/:id",
+    "/api/deleteItemInCart/:tableNumber",
     controller.cartController.deleteItemInCart
+  );
+  app.put(
+    "/api/confirmItemInCart/:tableNumber",
+    controller.cartController.confirmItemInCart
   );
 };

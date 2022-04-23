@@ -7,12 +7,9 @@ module.exports = {
   makeTable: async (req, res) => {
     const { tableNumber, tableType, orderList, cart, status } = req.body;
     try {
-      const orderlist = await Orderlists.create({
-        //detail: orderList,
-      });
-      const cart = await Cart.create({
-        //detail: { tableNumber: tableNumber },
-      });
+      const cart = await Cart.create({});
+      const orderlist = await Orderlists.create({});
+
       const table = await Tables.create({
         tableNumber: tableNumber,
         tableType: tableType,

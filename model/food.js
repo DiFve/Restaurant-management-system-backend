@@ -29,6 +29,7 @@ const foodSchema = new mongoose.Schema({
     },
   ],
   price: { type: Number, required: true },
+  status: { type: String, enum: ["InStock", "OutofStock"] },
 });
 
 const model = mongoose.model("foods", foodSchema);

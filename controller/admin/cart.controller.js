@@ -5,13 +5,10 @@ const Cart = require("../../model/cart");
 
 module.exports = {
   addItemToCart: async (req, res) => {
-    const { orderID, detail } = req.body;
-    const tableNumber = req.params.id;
+    const { detail } = req.body;
+    const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-      // console.log(table.cart);
-      // const item = await Cart.find({});
-      // console.log(item);
 
       const newOrder = await Cart.findByIdAndUpdate(table.cart, {
         $push: { detail: detail },
@@ -19,40 +16,44 @@ module.exports = {
       res.status(200).send("add to cart");
       res.status(200).json(newOrder);
     } catch (err) {}
-
-    //res.status(200).json(newOrder);
   },
   getAllItemInCart: async (req, res) => {
-    const tableNumber = req.params.id;
+    const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-      // console.log(table.cart);
-      // const item = await Cart.find({});
-      // console.log(item);
+
       const newOrder = await Cart.findById(table.cart);
-      //res.status(200).send("add to cart");
+
       res.status(200).json(newOrder);
     } catch (err) {}
   },
   deleteItemInCart: async (req, res) => {
     const { _id } = req.body;
-    const tableNumber = req.params.id;
+    const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-      // console.log(table.cart);
-      // const item = await Cart.find({});
-      // console.log(item);
-      const cart = await Cart.findById(table.cart);
-      // const item = cart.find({
-      //   detail: { $elemMatch: { _id: "62639d782eb3374a94c9f5e1" } },
-      // });
-      // cart.update(
-      //   {'_id':ObjectId(_id)},
-      //   {$pull:{}}
 
-      // )
-      //res.status(200).send("add to cart");
-      res.status(200).json(cart);
+      const cart = await Cart.findByIdAndUpdate(table.cart, {
+        $pull: { detail: { _id: _id } },
+      });
+
+      res.status(200).json({ message: "delete  success" });
     } catch (err) {}
+  },
+  confirmItemInCart: async (req, res) => {
+    const tableNumber = req.params.tableNumber;
+    try {
+      const table = await Tables.findOne({ tableNumber: tableNumber });
+
+      const thisCart = await Cart.findById(table.cart);
+
+      const thisOrderList = await Orderlists.findByIdAndUpdate(
+        table.orderList,
+        { $push: { order: thisCart.detail } }
+      );
+
+      await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+      res.status(200).json({ message: "success " });
+    } catch (error) {}
   },
 };
