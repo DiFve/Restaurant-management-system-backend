@@ -10,7 +10,6 @@ const orderlistSchema = new mongoose.Schema({
           price: Number,
           quantity: { type: Number, default: 0 },
           additionalInfo: { type: String },
-
           time: { type: Date, default: Date.now },
           foodStatus: {
             type: String,
@@ -25,6 +24,12 @@ const orderlistSchema = new mongoose.Schema({
           ],
         },
       ],
+      tableNumber: { type: Number },
+      orderStatus: {
+        type: String,
+        enum: ["success", "cooking", "fail"],
+        default: "cooking",
+      },
     },
   ],
 });

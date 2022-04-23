@@ -64,7 +64,7 @@ module.exports = {
 
       const thisOrderList = await Orderlists.findByIdAndUpdate(
         table.orderList,
-        { $push: { order: thisCart } }
+        { $push: { order: thisCart, tableNumber: tableNumber } }
       );
 
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });
