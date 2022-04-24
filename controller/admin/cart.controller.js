@@ -9,7 +9,6 @@ module.exports = {
     const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-
       const food = await Foods.findById(detail.foodID);
 
       if (food.status == "InStock") {
@@ -65,7 +64,7 @@ module.exports = {
 
       const thisOrderList = await Orderlists.findByIdAndUpdate(
         table.orderList,
-        { $push: { order: thisCart } }
+        { $push: { order: thisCart, tableNumber: tableNumber } }
       );
 
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });
