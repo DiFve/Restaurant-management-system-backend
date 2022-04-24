@@ -35,7 +35,24 @@ module.exports = {
   getAllMenu: async (req, res) => {
     try {
       const menu = await Foods.find();
-      res.status(200).json(menu);
+      var menuAvailable = [];
+      var menuOutofStock = [];
+      menu.map((e) => {
+        if (e.status == "InStock") {
+          menuAvailable.push(e);
+        } else if (e.status == "OutofStock") {
+          menuOutofStock.push(e);
+        }
+      });
+      var sortedMenu = [];
+      menuAvailable.map((e) => {
+        sortedMenu.push(e);
+      });
+      menuOutofStock.map((e) => {
+        sortedMenu.push(e);
+      });
+
+      res.status(200).json(sortedMenu);
     } catch (error) {
       console.log(error);
       res.status(200).json({ message: error });

@@ -6,7 +6,6 @@ const qr = require("qrcode");
 require("dotenv").config;
 module.exports = {
   makeTableForCustomer: async (req, res) => {
-    //makeTable(req, res);
     const { tableNumber, tableType, personAmount } = req.body;
     try {
       const table = await Tables.findOneAndUpdate(
