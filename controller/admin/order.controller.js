@@ -14,25 +14,34 @@ module.exports = {
   inComingOrder: async (req, res) => {
     const orderlist = await Orderlists.find({});
     var comingOrder = [];
-    try {
-      for (i = 0; i < orderlist.length; i++) {
-        for (j = 0; j < orderlist[i].order.length; j++) {
-          if (orderlist[i].order[j].orderStatus == "cooking") {
-            comingOrder.push(orderlist[i].order[j]);
-          }
+    //try {
+    for (i = 0; i < orderlist.length; i++) {
+      for (j = 0; j < orderlist[i].order.length; j++) {
+        if (orderlist[i].order[j].orderStatus == "cooking") {
+          // comingOrder.push(orderlist[i].order[j]);
+          comingOrder.push(orderlist[i]);
         }
       }
-      comingOrder.sort((a, b) => {
-        if (a.time > b.time) {
-          return 1;
+    }
+    //console.log(comingOrder);
+    comingOrder.sort((a, b) => {
+      for (i = 0; i < a.order.length; i++) {
+        for (j = 0; j < b.order.length; j++) {
+          if (a.order[i].time == b.order[j].time) {
+            continue;
+          }
+          if (a.order[i].time > b.order[j].time) {
+            return 1;
+          }
+          if (a.order[i].time < b.order[j].time) {
+            return -1;
+          }
+          return 0;
         }
-        if (a.time < b.time) {
-          return -1;
-        }
-        return 0;
-      });
-      res.status(200).json(comingOrder);
-    } catch (err) {}
+      }
+    });
+    res.status(200).json(comingOrder);
+    //} catch (err) {}
   },
   updateFoodStatus: async (req, res) => {
     const { _id, status } = req.body;
