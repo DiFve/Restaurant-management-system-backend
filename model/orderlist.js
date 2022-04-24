@@ -25,6 +25,7 @@ const orderlistSchema = new mongoose.Schema({
         },
       ],
       tableNumber: { type: Number },
+      time: { type: Date, default: Date.now },
       orderStatus: {
         type: String,
         enum: ["success", "cooking", "fail"],

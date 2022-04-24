@@ -61,4 +61,10 @@ module.exports = (app) => {
     "/api/updateFoodStatus",
     controller.orderListController.updateFoodStatus
   );
+
+  //user
+  app.get(
+    "/api/getAllEmployeeData",
+    controller.adminController.getAllEmployeeData
+  );
 };
