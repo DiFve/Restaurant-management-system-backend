@@ -12,6 +12,7 @@ const tableSchema = new mongoose.Schema({
   cart: { type: Schema.Types.ObjectId, ref: "cart" },
   status: { type: String, enum: ["available", "busy"] },
   personAmount: { type: Number },
+  callEmployee: {type: Boolean},
 });
 
 const model = mongoose.model("tables", tableSchema);
