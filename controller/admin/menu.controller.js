@@ -63,22 +63,57 @@ module.exports = {
       const menu = await Foods.find({
         $or: [{ foodType: "a-la-carte" }, { foodType: "buffet a-la-carte" }],
       });
-      res.status(200).json(menu);
+
+      var menuAvailable = [];
+      var menuOutofStock = [];
+      menu.map((e) => {
+        if (e.status == "InStock") {
+          menuAvailable.push(e);
+        } else if (e.status == "OutofStock") {
+          menuOutofStock.push(e);
+        }
+      });
+      var sortedMenu = [];
+      menuAvailable.map((e) => {
+        sortedMenu.push(e);
+      });
+      menuOutofStock.map((e) => {
+        sortedMenu.push(e);
+      });
+
+      res.status(200).json(sortedMenu);
     } catch (error) {
       console.log(error);
       res.status(200).json({ message: error });
     }
   },
   getBuffetMenu: async (req, res) => {
-    try {
-      const menu = await Foods.find({
-        $or: [{ foodType: "buffet" }, { foodType: "buffet a-la-carte" }],
-      });
-      res.status(200).json(menu);
-    } catch (error) {
-      console.log(error);
-      res.status(200).json({ message: error });
-    }
+    //try {
+    const menu = await Foods.find({
+      $or: [{ foodType: "buffet" }, { foodType: "buffet a-la-carte" }],
+    });
+    var menuAvailable = [];
+    var menuOutofStock = [];
+    menu.map((e) => {
+      if (e.status == "InStock") {
+        menuAvailable.push(e);
+      } else if (e.status == "OutofStock") {
+        menuOutofStock.push(e);
+      }
+    });
+    var sortedMenu = [];
+    menuAvailable.map((e) => {
+      sortedMenu.push(e);
+    });
+    menuOutofStock.map((e) => {
+      sortedMenu.push(e);
+    });
+
+    res.status(200).json(sortedMenu);
+    // } catch (error) {
+    //   console.log(error);
+    //   res.status(200).json({ message: error });
+    // }
   },
   getMenuByID: async (req, res) => {
     const id = req.params.id;
