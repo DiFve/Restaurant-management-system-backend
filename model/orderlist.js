@@ -27,7 +27,7 @@ const orderlistSchema = new mongoose.Schema({
       tableNumber: { type: Number },
       orderStatus: {
         type: String,
-        enum: ["compleate", "working"],
+        enum: ["complete", "working"],
         default: "working",
       },
     },

@@ -62,10 +62,12 @@ module.exports = {
 
       const thisCart = await Cart.findById(table.cart);
 
-      const thisOrderList = await Orderlists.findByIdAndUpdate(
-        table.orderList,
-        { $push: { order: thisCart, tableNumber: tableNumber } }
-      );
+      await Orderlists.findByIdAndUpdate(table.orderList, {
+        $push: { order: thisCart },
+      });
+      await Orderlists.findByIdAndUpdate(table.orderList, {
+        tableNumber: tableNumber,
+      });
 
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });
       res.status(200).json({ message: "success " });
