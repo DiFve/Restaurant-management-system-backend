@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const orderlistSchema = new mongoose.Schema({
+  tableNumber: { type: Number },
   order: [
     {
       detail: [
@@ -13,7 +14,7 @@ const orderlistSchema = new mongoose.Schema({
           time: { type: Date, default: Date.now },
           foodStatus: {
             type: String,
-            enum: ["success", "cooking", "fail"],
+            enum: ["complete", "cooking", "fail"],
             default: "cooking",
           },
           detail: [
@@ -24,12 +25,12 @@ const orderlistSchema = new mongoose.Schema({
           ],
         },
       ],
-      tableNumber: { type: Number },
+
       time: { type: Date, default: Date.now },
       orderStatus: {
         type: String,
-        enum: ["compleate", "working"],
-        default: "working",
+        enum: ["complete", "cooking"],
+        default: "cooking",
       },
     },
   ],

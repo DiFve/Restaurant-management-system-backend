@@ -61,13 +61,15 @@ module.exports = {
       const table = await Tables.findOne({ tableNumber: tableNumber });
 
       const thisCart = await Cart.findById(table.cart);
+      if (thisCart.detail.length === 0) {
+        return res.status(409).json({ message: "no item in cart" });
+      }
+      //thisCart.tableNumber = tableNumber;
+      order = await Orderlists.findByIdAndUpdate(table.orderList, {
+        $push: { order: thisCart },
+      });
 
-      const thisOrderList = await Orderlists.findById(
-        table.orderList
-        // { $push: { order: thisCart, tableNumber: tableNumber } }
-      );
-      console.log(thisOrderList);
-      // await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+      await Cart.findByIdAndUpdate(table.cart, { detail: [] });
       res.status(200).json({ message: "success " });
     } catch (error) {}
   },
