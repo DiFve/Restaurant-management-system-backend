@@ -59,21 +59,40 @@ module.exports = {
     const tableNumber = req.params.tableNumber;
     try {
       const table = await Tables.findOne({ tableNumber: tableNumber });
-
+      var totalPrice = 0;
       const thisCart = await Cart.findById(table.cart);
+
+      thisCart.detail.map((e) => {
+        totalPrice += e.price;
+      });
+
       if (thisCart.detail.length === 0) {
         return res.status(409).json({ message: "no item in cart" });
       }
+      const data = {
+        detail: thisCart.detail,
+        totalPrice: totalPrice,
+      };
+      console.log(data);
       //thisCart.tableNumber = tableNumber;
       order = await Orderlists.findByIdAndUpdate(table.orderList, {
-        $push: { order: thisCart },
+        $push: { order: data },
       });
-
+      // order = await Orderlists.findByIdAndUpdate(table.orderList, {
+      //  $push:{ order: { totalPrice: totalPrice }}
+      // });
+      // order.order.map((e) => {
+      //   e.totalPrice = totalPrice;
+      //   console.log(e);
+      // });
+      // if (order) {
+      //   await order.save();
+      // }
       await Cart.findByIdAndDelete(table.cart);
       const cart = await Cart.create({ tableNumber: tableNumber });
       table.cart = cart._id;
       table.save();
-      res.status(200).json({ message: "success " });
+      res.status(200).json(totalPrice);
     } catch (error) {}
   },
 };
