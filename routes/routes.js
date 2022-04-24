@@ -37,9 +37,11 @@ module.exports = (app) => {
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.get("/api/seeTableByID/:id", controller.tableController.seeTableByID);
+  app.put("/api/addBuffetPrice/:id", controller.tableController.addBuffetPrice);
+  app.put("/api/pushEmployeeCall", controller.tableController.pushCallEmployee);
   app.put(
-    "/api/addBuffetPrice/:tablenumber/:orderid",
-    controller.tableController.addBuffetPrice
+    "/api/cancelEmployeeCall",
+    controller.tableController.cancelCallEmployee
   );
   //cart
   app.put(
@@ -70,8 +72,8 @@ module.exports = (app) => {
     controller.orderListController.updateFoodStatus
   );
   app.put(
-    "/api/updateOrderStatus",
-    controller.orderListController.updateOrderStatus
+    "/api/seeItembyOrderId",
+    controller.orderListController.seeItembyOrderId
   );
 
   //user
