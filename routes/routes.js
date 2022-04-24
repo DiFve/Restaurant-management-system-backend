@@ -27,7 +27,8 @@ module.exports = (app) => {
   app.get("/api/getMenuByID/:id", controller.menuController.getMenuByID);
   app.put("/api/addFoodType", controller.menuController.addFoodType);
   app.get("/api/getFoodType", controller.menuController.getFoodType);
-
+  app.put("/api/editMenu/:id", controller.menuController.editMenu);
+  app.delete("/api/deleteMenu/:id", controller.menuController.deleteMenu);
   //table
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
