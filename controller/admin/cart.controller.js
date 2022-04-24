@@ -69,7 +69,10 @@ module.exports = {
         $push: { order: thisCart },
       });
 
-      await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+      await Cart.findByIdAndDelete(table.cart);
+      const cart = await Cart.create({ tableNumber: tableNumber });
+      table.cart = cart._id;
+      table.save();
       res.status(200).json({ message: "success " });
     } catch (error) {}
   },
