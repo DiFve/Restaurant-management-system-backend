@@ -82,4 +82,18 @@ module.exports = {
       res.status(200).json({ message: "type added" });
     } catch (error) {}
   },
+  editMenu: async (req, res) => {
+    try {
+      await Foods.findByIdAndUpdate(req.params.id, {
+        $set: req.body,
+      });
+      res.status(200).send({ message: "edit compleate" });
+    } catch (error) {}
+  },
+  deleteMenu: async (req, res) => {
+    try {
+      await Foods.findByIdAndDelete(req.params.id);
+      res.status(200).send({ message: "delete compleate" });
+    } catch (error) {}
+  },
 };

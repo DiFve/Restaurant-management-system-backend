@@ -28,8 +28,8 @@ const orderlistSchema = new mongoose.Schema({
       time: { type: Date, default: Date.now },
       orderStatus: {
         type: String,
-        enum: ["success", "cooking", "fail"],
-        default: "cooking",
+        enum: ["compleate", "working"],
+        default: "working",
       },
     },
   ],
