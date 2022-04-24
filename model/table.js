@@ -7,6 +7,7 @@ const tableSchema = new mongoose.Schema({
     required: true,
     enum: ["buffet", "a-la-carte", "none"],
   },
+  buffetPrice: { type: Number },
   orderList: { type: Schema.Types.ObjectId, ref: "orderlists" },
   cart: { type: Schema.Types.ObjectId, ref: "cart" },
   status: { type: String, enum: ["available", "busy"] },

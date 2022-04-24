@@ -5,7 +5,7 @@ const foodSchema = new mongoose.Schema({
   type: [
     {
       type: String,
-      //enum: ["pork", "beef", "chicken", "drink", "seafood", "etc", "fav"],
+      //enum: ["pork", "beef", "chicken", "drink", "seafood", "etc", "fav","recommend"],
       required: true,
     },
   ],
