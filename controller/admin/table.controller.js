@@ -18,6 +18,7 @@ module.exports = {
         orderList: orderlist._id,
         cart: cart._id,
         status: status,
+        callEmployee: false,
       });
       return res.status(200).send("tableCreate");
     } catch (error) {
@@ -52,5 +53,37 @@ module.exports = {
       });
       res.status(200).json(table);
     } catch (error) {}
+  },
+  pushCallEmployee: async(req,res)=>{
+    try{
+      const tableNumber = req.body.tableNumber;
+      const table = await Tables.findOneAndUpdate({tableNumber:tableNumber},{
+        $set:{
+          callEmployee:true
+        }
+      });
+      console.log(table)
+      res.status(200).json({messaage:'call employee logged'});
+    }
+    catch(error){
+      console.log(error);
+      res.status(200).json({ message: error });
+    }
+  },
+  cancelCallEmployee: async(req,res)=>{
+    try{
+      const tableNumber = req.body.tableNumber;
+      const table = await Tables.findOneAndUpdate({tableNumber:tableNumber},{
+        $set:{
+          callEmployee:false
+        }
+      });
+      console.log(table)
+      res.status(200).json({messaage:'call employee canceled'});
+    }
+    catch(error){
+      console.log(error);
+      res.status(200).json({ message: error });
+    }
   },
 };

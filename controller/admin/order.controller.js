@@ -67,14 +67,46 @@ module.exports = {
       console.log(error);
     }
   },
-  addItemToOrder: async (req, res) => {
-    const { detail } = req.body;
-    const tableNumber = req.params.tableNumber;
+  updateOrderStatus: async (req, res) => {
+    const { _id, orderStatus } = req.body;
+
     try {
-      const table = await Tables.findOne({ tableNumber: tableNumber });
-      const orderlist = await Orderlists.findByIdAndUpdate(table.orderList, {
-        $push: { order: { detail: detail } },
+      const orderlist = await Orderlists.findOne({
+        order: { $elemMatch: { _id: _id } },
       });
-    } catch (err) {}
+      orderlist?.order.map((e) => {
+        if (e._id.toString() == _id) {
+          e.orderStatus = orderStatus;
+        }
+      });
+      if (orderlist) {
+        await orderlist.save();
+      }
+
+      //console.log(orderlist);
+      res.status(200).json(orderStatus);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  seeItembyOrderId: async (req, res) => {
+    const { _id, orderStatus } = req.body;
+    var _order = [];
+    try {
+      const orderlist = await Orderlists.findOne({
+        order: { $elemMatch: { _id: _id } },
+      });
+      orderlist?.order.map((e) => {
+        e.detail.map((_e) => {
+          _order.push(_e);
+        });
+      });
+      if (orderlist) {
+        await orderlist.save();
+      }
+      res.status(200).send(_order);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

@@ -25,7 +25,7 @@ const orderlistSchema = new mongoose.Schema({
           ],
         },
       ],
-
+      totalPrice: Number,
       time: { type: Date, default: Date.now },
       orderStatus: {
         type: String,
