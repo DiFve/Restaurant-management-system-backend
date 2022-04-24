@@ -69,27 +69,7 @@ module.exports = {
         $push: { order: thisCart },
       });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-      await Orderlists.findByIdAndUpdate(table.orderList, {
-        $push: { order: thisCart },
-      });
-      await Orderlists.findByIdAndUpdate(table.orderList, {
-        tableNumber: tableNumber,
-      });
-
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });
-=======
-      const thisOrderList = await Orderlists.findById(
-        table.orderList
-        // { $push: { order: thisCart, tableNumber: tableNumber } }
-      );
-      console.log(thisOrderList);
-      // await Cart.findByIdAndUpdate(table.cart, { detail: [] });
->>>>>>> c6d438cfc66984ca070fc8d7e8d63acafad6fc3c
-=======
-      await Cart.findByIdAndUpdate(table.cart, { detail: [] });
->>>>>>> cac5213d5cbd10d732e3a4de573bec1a37a36e03
       res.status(200).json({ message: "success " });
     } catch (error) {}
   },
