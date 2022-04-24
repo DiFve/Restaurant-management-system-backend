@@ -89,7 +89,7 @@ module.exports = {
     }
   },
   seeItembyOrderId: async (req, res) => {
-    const { _id } = req.body;
+    const _id = req.params.id;
     var _order = [];
     try {
       const orderlist = await Orderlists.find({});
@@ -100,6 +100,7 @@ module.exports = {
           }
         });
       });
+      console.log(_id);
       res.status(200).send(_order);
     } catch (error) {
       console.log(error);

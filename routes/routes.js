@@ -78,7 +78,7 @@ module.exports = (app) => {
     controller.orderListController.updateOrderStatus
   );
   app.get(
-    "/api/seeItembyOrderId",
+    "/api/seeItembyOrderId/:id",
     controller.orderListController.seeItembyOrderId
   );
 
