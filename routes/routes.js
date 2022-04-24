@@ -37,20 +37,14 @@ module.exports = (app) => {
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.get("/api/seeTableByID/:id", controller.tableController.seeTableByID);
-<<<<<<< HEAD
+
   app.put("/api/addBuffetPrice/:id", controller.tableController.addBuffetPrice);
   app.put("/api/pushEmployeeCall", controller.tableController.pushCallEmployee);
   app.put(
     "/api/cancelEmployeeCall",
     controller.tableController.cancelCallEmployee
   );
-=======
 
-  app.put("/api/addBuffetPrice/:id", controller.tableController.addBuffetPrice);
-  app.put("/api/pushEmployeeCall",controller.tableController.pushCallEmployee);
-  app.put("/api/cancelEmployeeCall",controller.tableController.cancelCallEmployee);
-
->>>>>>> 40162e54a84e052de809bdb9adc57bb613d63d1c
   //cart
   app.put(
     "/api/addItemToCart/:tableNumber",
