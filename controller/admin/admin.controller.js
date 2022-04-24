@@ -63,4 +63,11 @@ module.exports = {
       res.status(200).json(data);
     } catch (error) {}
   },
+  deleteEmployee: async (req, res) => {
+    const { email } = req.body;
+    try {
+      await Users.findOneAndDelete({ email: email });
+      res.status(200).json({ message: "Employee delete" });
+    } catch (error) {}
+  },
 };
