@@ -1,5 +1,6 @@
 const { register } = require("./login.controller");
 const { makeTable } = require("./table.controller");
+const Users = require("../../model/user");
 const Tables = require("../../model/table");
 const qr = require("qrcode");
 require("dotenv").config;
@@ -39,5 +40,17 @@ module.exports = {
         qrImage: `images/qrcode/table${req.body.table}.png`,
       });
     } catch (error) {}
+  },
+  getAllEmployeeData: async (req, res) => {
+    //try {
+    const user = await Users.find({ role: "employee" });
+    //console.log(user[0]);
+    var data = [];
+
+    user.map((e) => {
+      console.log(e.email);
+    });
+    res.status(200).json(user);
+    //} catch (error) {}
   },
 };

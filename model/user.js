@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
   },
   foodType: { type: String, enum: ["buffet", "a-la-carte"] },
   table: { type: Number },
+  nickname: { type: String },
+  name: { type: String },
+  surname: { type: String },
   token: { type: String },
 });
 
