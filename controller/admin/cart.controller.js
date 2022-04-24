@@ -18,7 +18,7 @@ module.exports = {
         });
         res.status(200).send("add to cart");
       } else if (food.status == "OutofStock") {
-        res.status(409).send("out od stock");
+        res.status(409).send("out of stock");
       }
     } catch (err) {
       res.status(404).send("error");
@@ -62,6 +62,7 @@ module.exports = {
 
       const thisCart = await Cart.findById(table.cart);
 
+<<<<<<< HEAD
       await Orderlists.findByIdAndUpdate(table.orderList, {
         $push: { order: thisCart },
       });
@@ -70,6 +71,14 @@ module.exports = {
       });
 
       await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+=======
+      const thisOrderList = await Orderlists.findById(
+        table.orderList
+        // { $push: { order: thisCart, tableNumber: tableNumber } }
+      );
+      console.log(thisOrderList);
+      // await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+>>>>>>> c6d438cfc66984ca070fc8d7e8d63acafad6fc3c
       res.status(200).json({ message: "success " });
     } catch (error) {}
   },
