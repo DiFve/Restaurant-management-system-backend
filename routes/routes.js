@@ -87,4 +87,5 @@ module.exports = (app) => {
     "/api/getAllEmployeeData",
     controller.adminController.getAllEmployeeData
   );
+  app.delete("/api/deleteEmployee", controller.adminController.deleteEmployee);
 };

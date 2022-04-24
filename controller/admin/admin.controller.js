@@ -6,12 +6,16 @@ const qr = require("qrcode");
 require("dotenv").config;
 module.exports = {
   makeTableForCustomer: async (req, res) => {
-    //makeTable(req, res);
-    const { tableNumber, tableType, personAmount } = req.body;
+    const { tableNumber, tableType, personAmount, buffetPrice } = req.body;
     try {
       const table = await Tables.findOneAndUpdate(
         { tableNumber: tableNumber },
-        { tableType: tableType, personAmount: personAmount, status: "busy" }
+        {
+          tableType: tableType,
+          personAmount: personAmount,
+          status: "busy",
+          buffetPrice: buffetPrice,
+        }
       );
 
       req.body.foodType = req.body.tableType;
@@ -22,6 +26,7 @@ module.exports = {
       }`;
       req.body.email = email;
       req.body.password = password;
+      req.body.role = "customer";
       const token = await register(req, res);
 
       const url = `https://frontend.manhermak.com/auth/${token}`;
@@ -56,6 +61,13 @@ module.exports = {
         });
       });
       res.status(200).json(data);
+    } catch (error) {}
+  },
+  deleteEmployee: async (req, res) => {
+    const { email } = req.body;
+    try {
+      await Users.findOneAndDelete({ email: email });
+      res.status(200).json({ message: "Employee delete" });
     } catch (error) {}
   },
 };
