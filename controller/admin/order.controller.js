@@ -31,26 +31,33 @@ module.exports = {
     //const order = await Orderlists.findOneAndUpdate({ _id: _id }, { order: {order:{detail: }} });
     //const order = await Orderlists.findById(_id);
     //console.log(order.order[0].detail);
-
-    const orderlist = await Orderlists.find({});
-    var edit = orderlist[0].order;
-    for (i = 0; i < orderlist.length; i++) {
-      for (j = 0; j < orderlist[i].order.length; j++) {
-        for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
-          if (orderlist[i].order[j].detail[k]._id == _id) {
-            orderlist[i].order[j].detail[k].foodStatus = "success";
-
-            //console.log(orderlist[i].order[j].detail[k]);
-            orderID = orderlist[i]._id;
-            break;
-          }
-        }
-      }
+    try {
+      const orderlist = await Orderlists.findOneAndUpdate({
+        order: { $elemMatch: { detail: { $elemMatch: { _id: _id } } } },
+        $set: { "order.$[].detail.$[foodStatus]": status },
+        arrayFilters: [{ foodStatus: "foodStatus" }],
+      });
+      console.log(orderlist);
+      res.status(200).json(orderlist);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(edit);
-    const test = await Orderlists.findByIdAndUpdate(orderID);
-    console.log(test);
+
+    // for (i = 0; i < orderlist.length; i++) {
+    //   for (j = 0; j < orderlist[i].order.length; j++) {
+    //     for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
+    //       if (orderlist[i].order[j].detail[k]._id == _id) {
+    //         orderlist[i].order[j].detail[k].foodStatus = "success";
+
+    //         //console.log(orderlist[i].order[j].detail[k]);
+    //         //edit = orderlist[i].order[j].order;
+    //         orderID = orderlist[i]._id;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+
     //console.log(orderID);
-    res.status(200).json(orderlist);
   },
 };
