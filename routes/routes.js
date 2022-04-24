@@ -33,7 +33,7 @@ module.exports = (app) => {
   app.post("/api/makeTable", controller.tableController.makeTable);
   app.get("/api/seeTable", controller.tableController.seeTable);
   app.get("/api/seeTableByID/:id", controller.tableController.seeTableByID);
-
+  app.put("/api/addBuffetPrice/:id", controller.tableController.addBuffetPrice);
   //cart
   app.put(
     "/api/addItemToCart/:tableNumber",
