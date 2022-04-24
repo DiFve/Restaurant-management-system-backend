@@ -17,24 +17,20 @@ module.exports = {
     try {
       for (i = 0; i < orderlist.length; i++) {
         for (j = 0; j < orderlist[i].order.length; j++) {
-          for (k = 0; k < orderlist[i].order[j].detail.length; k++) {
-            if (orderlist[i].order[j].detail[k].foodStatus == "cooking") {
-              comingOrder.push(orderlist[i].order[j].detail[k]);
-              console.log(k);
-            }
+          if (orderlist[i].order[j].orderStatus == "cooking") {
+            comingOrder.push(orderlist[i].order[j]);
           }
         }
       }
       comingOrder.sort((a, b) => {
-        if (a.time < b.time) {
+        if (a.time > b.time) {
           return 1;
         }
-        if (a.time > b.time) {
+        if (a.time < b.time) {
           return -1;
         }
         return 0;
       });
-      //console.log(comingOrder.length);
       res.status(200).json(comingOrder);
     } catch (err) {}
   },

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema({
+  tableNumber: { type: Number },
   detail: [
     {
       foodID: { type: String },

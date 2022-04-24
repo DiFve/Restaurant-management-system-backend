@@ -61,7 +61,15 @@ module.exports = {
       const table = await Tables.findOne({ tableNumber: tableNumber });
 
       const thisCart = await Cart.findById(table.cart);
+      if (thisCart.detail.length === 0) {
+        return res.status(409).json({ message: "no item in cart" });
+      }
+      //thisCart.tableNumber = tableNumber;
+      order = await Orderlists.findByIdAndUpdate(table.orderList, {
+        $push: { order: thisCart },
+      });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       await Orderlists.findByIdAndUpdate(table.orderList, {
         $push: { order: thisCart },
@@ -79,6 +87,9 @@ module.exports = {
       console.log(thisOrderList);
       // await Cart.findByIdAndUpdate(table.cart, { detail: [] });
 >>>>>>> c6d438cfc66984ca070fc8d7e8d63acafad6fc3c
+=======
+      await Cart.findByIdAndUpdate(table.cart, { detail: [] });
+>>>>>>> cac5213d5cbd10d732e3a4de573bec1a37a36e03
       res.status(200).json({ message: "success " });
     } catch (error) {}
   },

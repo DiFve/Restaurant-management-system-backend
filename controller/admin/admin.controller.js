@@ -42,15 +42,20 @@ module.exports = {
     } catch (error) {}
   },
   getAllEmployeeData: async (req, res) => {
-    //try {
-    const user = await Users.find({ role: "employee" });
-    //console.log(user[0]);
-    var data = [];
+    try {
+      const user = await Users.find({ role: "employee" });
 
-    user.map((e) => {
-      console.log(e.email);
-    });
-    res.status(200).json(user);
-    //} catch (error) {}
+      var data = [];
+
+      user.map((e) => {
+        data.push({
+          email: e.email,
+          name: e.name,
+          surname: e.surname,
+          nickname: e.nickname,
+        });
+      });
+      res.status(200).json(data);
+    } catch (error) {}
   },
 };

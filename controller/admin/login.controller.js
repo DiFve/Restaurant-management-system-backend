@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   register: async (req, res) => {
-    const { email, password, role, foodType, table } = req.body;
+    const { email, password, role, foodType, table, name, surname, nickname } =
+      req.body;
     try {
       if (!(email && password)) {
         return res.status(400).send("Required email and password.");
@@ -26,6 +27,12 @@ module.exports = {
         table: table,
       });
 
+      if (role == "employee") {
+        user.name = name;
+        user.surname = surname;
+        user.nickname = nickname;
+        user.save();
+      }
       const token = jwt.sign(
         {
           user_id: user._id,
@@ -40,7 +47,7 @@ module.exports = {
         }
       );
       await Users.findByIdAndUpdate(user._id, { token: token });
-      if (user.table === 0) {
+      if (role === "admin" || role === "employee") {
         return res.status(201).json({ token: token });
       } else {
         return token;
