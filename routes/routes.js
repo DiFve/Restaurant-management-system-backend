@@ -13,6 +13,10 @@ module.exports = (app) => {
     auth,
     controller.adminController.makeTableForCustomer
   );
+  app.post(
+    "/api/registerEmployee",
+    controller.loginController.registerEmployee
+  );
 
   //menu
   app.post("/api/addMenu", controller.menuController.addMenu);

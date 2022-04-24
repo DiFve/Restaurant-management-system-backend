@@ -98,4 +98,49 @@ module.exports = {
   home: async (req, res) => {
     return res.status(200).send(req.user);
   },
+  registerEmployee: async (req, res) => {
+    const { email, password, name, surname, nickname } = req.body;
+
+    try {
+      if (!(email && password && name && surname && nickname)) {
+        return res.status(400).send("Required email and password.");
+      }
+      const existUser = await Users.findOne({ email });
+
+      if (existUser) {
+        return res.status(409).send("This email was taken.");
+      }
+
+      hashPW = await bcrypt.hash(password, 10);
+      const user = await Users.create({
+        email: email,
+        password: hashPW,
+        role: "employee",
+        foodType: "buffet",
+        table: 0,
+        name: name,
+        surname: surname,
+        nickname: nickname,
+      });
+
+      const token = jwt.sign(
+        {
+          user_id: user._id,
+          email: user.email,
+          role: user.role,
+          foodType: user.foodType,
+          table: user.table,
+        },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
+      await Users.findByIdAndUpdate(user._id, { token: token });
+
+      return res.status(200).json({ token: token });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
