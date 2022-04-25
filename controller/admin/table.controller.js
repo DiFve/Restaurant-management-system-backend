@@ -38,6 +38,7 @@ module.exports = {
       });
       res.status(200).json(data);
     } catch (error) {}
+    /////////
   },
   deleteTable: async (req, res) => {
     const id = req.params.id;
