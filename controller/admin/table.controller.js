@@ -54,36 +54,93 @@ module.exports = {
       res.status(200).json(table);
     } catch (error) {}
   },
-  pushCallEmployee: async(req,res)=>{
-    try{
+  pushCallEmployee: async (req, res) => {
+    try {
       const tableNumber = req.body.tableNumber;
-      const table = await Tables.findOneAndUpdate({tableNumber:tableNumber},{
-        $set:{
-          callEmployee:true
+      const table = await Tables.findOneAndUpdate(
+        { tableNumber: tableNumber },
+        {
+          $set: {
+            callEmployee: true,
+          },
         }
-      });
-      console.log(table)
-      res.status(200).json({messaage:'call employee logged'});
-    }
-    catch(error){
+      );
+      console.log(table);
+      res.status(200).json({ messaage: "call employee logged" });
+    } catch (error) {
       console.log(error);
       res.status(200).json({ message: error });
     }
   },
-  cancelCallEmployee: async(req,res)=>{
-    try{
+  cancelCallEmployee: async (req, res) => {
+    try {
       const tableNumber = req.body.tableNumber;
-      const table = await Tables.findOneAndUpdate({tableNumber:tableNumber},{
-        $set:{
-          callEmployee:false
+      const table = await Tables.findOneAndUpdate(
+        { tableNumber: tableNumber },
+        {
+          $set: {
+            callEmployee: false,
+          },
         }
-      });
-      console.log(table)
-      res.status(200).json({messaage:'call employee canceled'});
-    }
-    catch(error){
-      console.log(error);
+      );
+      // console.log(table);
+      res.status(200).json({ messaage: "call employee canceled" });
+    } catch (error) {
+      //console.log(error);
       res.status(200).json({ message: error });
     }
+  },
+  cashOutTable: async (req, res) => {
+    try {
+      const table = await Tables.findOne({
+        tableNumber: req.params.tableNumber,
+      });
+      const orderlist = await Orderlists.findById(table.orderList);
+
+      var item = [];
+      var totalPrice = 0;
+      var data = {};
+      orderlist.order?.map((e) => {
+        item.push(e.detail);
+        totalPrice += e.totalPrice;
+        console.log(e.detail);
+      });
+      if (table.tableType == "buffet") {
+        totalPrice = table.buffetPrice * table.personAmount;
+        data = {
+          detail: item,
+          totalPrice: totalPrice,
+          buffetPrice: table.buffetPrice,
+        };
+      } else {
+        data = {
+          detail: item,
+          totalPrice: totalPrice,
+          //buffetPrice: table.buffetPrice,
+        };
+      }
+
+      // await Orderlists.findByIdAndUpdate(table.orderList, {
+      //   $set: { order: [] },
+      // });
+      await Tables.findOneAndUpdate(
+        {
+          tableNumber: req.params.tableNumber,
+        },
+        { status: "available" }
+      );
+      console.log(totalPrice);
+      res.status(200).json(data);
+    } catch (error) {}
+  },
+  confirmCashOut: async (req, res) => {
+    try {
+      const table = await Tables.findOne({
+        tableNumber: req.params.tableNumber,
+      });
+      await Orderlists.findByIdAndUpdate(table.orderList, {
+        $set: { order: [] },
+      });
+    } catch (error) {}
   },
 };

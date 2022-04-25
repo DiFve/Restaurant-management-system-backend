@@ -44,7 +44,10 @@ module.exports = (app) => {
     "/api/cancelEmployeeCall",
     controller.tableController.cancelCallEmployee
   );
-
+  app.get(
+    "/api/cashOutTable/:tableNumber",
+    controller.tableController.cashOutTable
+  );
   //cart
   app.put(
     "/api/addItemToCart/:tableNumber",

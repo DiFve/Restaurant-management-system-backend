@@ -100,7 +100,7 @@ module.exports = {
           }
         });
       });
-      console.log(_id);
+      // console.log(_id);
       res.status(200).send(_order);
     } catch (error) {
       console.log(error);
