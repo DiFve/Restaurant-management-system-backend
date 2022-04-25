@@ -43,7 +43,7 @@ module.exports = {
     //} catch (err) {}
   },
   updateFoodStatus: async (req, res) => {
-    const { _id, status } = req.body;
+    const { _id, foodStatus } = req.body;
 
     try {
       const orderlist = await Orderlists.findOne({
@@ -51,8 +51,11 @@ module.exports = {
       });
       orderlist?.order.map((e) => {
         e.detail.map((_e) => {
+          console.log(_e);
           if (_e._id.toString() == _id) {
-            _e.foodStatus = status;
+            _e.foodStatus = foodStatus;
+
+            console.log(foodStatus);
           }
         });
       });
@@ -101,7 +104,7 @@ module.exports = {
         });
       });
       // console.log(_id);
-      res.status(200).send(_order);
+      res.status(200).send(data);
     } catch (error) {
       console.log(error);
     }
