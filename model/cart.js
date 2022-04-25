@@ -9,7 +9,7 @@ const cartSchema = new mongoose.Schema({
       price: Number,
       additionalInfo: { type: String },
       quantity: { type: Number, default: 0 },
-      time: { type: Date, default: Date.now },
+      time: { type: Date, default: () => Date.now() + 7 * 60 * 60 * 1000 },
       detail: [
         {
           topicName: String,

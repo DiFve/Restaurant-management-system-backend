@@ -48,6 +48,10 @@ module.exports = (app) => {
     "/api/cashOutTable/:tableNumber",
     controller.tableController.cashOutTable
   );
+  app.get(
+    "/api/confirmCashOut/:tableNumber",
+    controller.tableController.confirmCashOut
+  );
   //cart
   app.put(
     "/api/addItemToCart/:tableNumber",
