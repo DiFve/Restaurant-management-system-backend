@@ -123,12 +123,7 @@ module.exports = {
       // await Orderlists.findByIdAndUpdate(table.orderList, {
       //   $set: { order: [] },
       // });
-      await Tables.findOneAndUpdate(
-        {
-          tableNumber: req.params.tableNumber,
-        },
-        { status: "available" }
-      );
+
       console.log(totalPrice);
       res.status(200).json(data);
     } catch (error) {}
@@ -141,6 +136,12 @@ module.exports = {
       await Orderlists.findByIdAndUpdate(table.orderList, {
         $set: { order: [] },
       });
+      await Tables.findOneAndUpdate(
+        {
+          tableNumber: req.params.tableNumber,
+        },
+        { status: "available" }
+      );
     } catch (error) {}
   },
 };
