@@ -63,8 +63,7 @@ module.exports = {
       const thisCart = await Cart.findById(table.cart);
 
       thisCart.detail.map((e) => {
-        _price = e.quantity * e.price;
-        totalPrice += _price;
+        totalPrice += e.price;
       });
 
       if (thisCart.detail.length === 0) {
