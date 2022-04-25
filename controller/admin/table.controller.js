@@ -101,10 +101,14 @@ module.exports = {
       var item = [];
       var totalPrice = 0;
       var data = {};
-      orderlist.order?.map((e) => {
-        item.push(e.detail);
-        totalPrice += e.totalPrice;
-        console.log(e.detail);
+      orderlist?.order.map((e) => {
+        e.detail.map((_e) => {
+          if (_e.foodStatus != "fail") {
+            item.push(_e);
+            console.log(_e);
+            totalPrice += _e.price;
+          }
+        });
       });
       if (table.tableType == "buffet") {
         totalPrice = table.buffetPrice * table.personAmount;
@@ -112,6 +116,7 @@ module.exports = {
           detail: item,
           totalPrice: totalPrice,
           buffetPrice: table.buffetPrice,
+          personAmount: table.personAmount,
         };
       } else {
         data = {

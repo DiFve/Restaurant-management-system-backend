@@ -11,7 +11,7 @@ const orderlistSchema = new mongoose.Schema({
           price: Number,
           quantity: { type: Number, default: 0 },
           additionalInfo: { type: String },
-          time: { type: Date, default: Date.now },
+          time: { type: Date, default: () => Date.now() + 7 * 60 * 60 * 1000 },
           foodStatus: {
             type: String,
             enum: ["complete", "cooking", "fail"],
@@ -26,7 +26,7 @@ const orderlistSchema = new mongoose.Schema({
         },
       ],
       totalPrice: Number,
-      time: { type: Date, default: Date.now },
+      time: { type: Date, default: () => Date.now() + 7 * 60 * 60 * 1000 },
       orderStatus: {
         type: String,
         enum: ["complete", "cooking"],
