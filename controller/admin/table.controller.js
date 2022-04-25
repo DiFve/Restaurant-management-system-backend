@@ -38,6 +38,7 @@ module.exports = {
       });
       res.status(200).json(data);
     } catch (error) {}
+    /////////
   },
   deleteTable: async (req, res) => {
     const id = req.params.id;
@@ -83,17 +84,10 @@ module.exports = {
           },
         }
       );
-<<<<<<< HEAD
-      console.log(table);
-      res.status(200).json({ messaage: "call employee canceled" });
-    } catch (error) {
-      console.log(error);
-=======
       // console.log(table);
       res.status(200).json({ messaage: "call employee canceled" });
     } catch (error) {
       //console.log(error);
->>>>>>> 310fa2bd64121f58e1ab92e6c5addf93da106b9f
       res.status(200).json({ message: error });
     }
   },
