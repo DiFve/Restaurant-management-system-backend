@@ -51,11 +51,8 @@ module.exports = {
       });
       orderlist?.order.map((e) => {
         e.detail.map((_e) => {
-          console.log(_e);
           if (_e._id.toString() == _id) {
             _e.foodStatus = foodStatus;
-
-            console.log(foodStatus);
           }
         });
       });
@@ -104,7 +101,7 @@ module.exports = {
         });
       });
       // console.log(_id);
-      res.status(200).send(data);
+      res.status(200).send(_order);
     } catch (error) {
       console.log(error);
     }
