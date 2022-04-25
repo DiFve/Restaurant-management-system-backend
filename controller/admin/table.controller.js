@@ -112,6 +112,7 @@ module.exports = {
           detail: item,
           totalPrice: totalPrice,
           buffetPrice: table.buffetPrice,
+          personAmount: table.personAmount,
         };
       } else {
         data = {
