@@ -27,15 +27,15 @@ module.exports = {
         }
       }
     }
-    console.log(comingOrder);
+    //console.log(comingOrder);
     comingOrder.sort((a, b) => {
-      if (a.time == b.time) {
+      if (a.order.time == b.order.time) {
         return 0;
       }
-      if (a.time > b.time) {
+      if (a.order.time > b.order.time) {
         return 1;
       }
-      if (a.time < b.time) {
+      if (a.order.time < b.order.time) {
         return -1;
       }
     });
