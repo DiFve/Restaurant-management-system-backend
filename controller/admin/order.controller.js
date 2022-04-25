@@ -43,7 +43,7 @@ module.exports = {
     //} catch (err) {}
   },
   updateFoodStatus: async (req, res) => {
-    const { _id, status } = req.body;
+    const { _id, foodStatus } = req.body;
 
     try {
       const orderlist = await Orderlists.findOne({
@@ -52,7 +52,7 @@ module.exports = {
       orderlist?.order.map((e) => {
         e.detail.map((_e) => {
           if (_e._id.toString() == _id) {
-            _e.foodStatus = status;
+            _e.foodStatus = foodStatus;
           }
         });
       });
