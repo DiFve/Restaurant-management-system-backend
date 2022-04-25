@@ -44,7 +44,10 @@ module.exports = (app) => {
     "/api/cancelEmployeeCall",
     controller.tableController.cancelCallEmployee
   );
-
+  app.get(
+    "/api/cashOutTable/:tableNumber",
+    controller.tableController.cashOutTable
+  );
   //cart
   app.put(
     "/api/addItemToCart/:tableNumber",
@@ -74,7 +77,11 @@ module.exports = (app) => {
     controller.orderListController.updateFoodStatus
   );
   app.put(
-    "/api/seeItembyOrderId",
+    "/api/updateOrderStatus",
+    controller.orderListController.updateOrderStatus
+  );
+  app.get(
+    "/api/seeItembyOrderId/:id",
     controller.orderListController.seeItembyOrderId
   );
 

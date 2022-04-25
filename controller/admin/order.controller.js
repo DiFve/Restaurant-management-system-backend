@@ -89,20 +89,18 @@ module.exports = {
     }
   },
   seeItembyOrderId: async (req, res) => {
-    const { _id, orderStatus } = req.body;
+    const _id = req.params.id;
     var _order = [];
     try {
-      const orderlist = await Orderlists.findOne({
-        order: { $elemMatch: { _id: _id } },
-      });
-      orderlist?.order.map((e) => {
-        e.detail.map((_e) => {
-          _order.push(_e);
+      const orderlist = await Orderlists.find({});
+      orderlist?.map((e) => {
+        e.order.map((_e) => {
+          if (_e._id == _id) {
+            _order.push(_e.detail);
+          }
         });
       });
-      if (orderlist) {
-        await orderlist.save();
-      }
+      // console.log(_id);
       res.status(200).send(_order);
     } catch (error) {
       console.log(error);
