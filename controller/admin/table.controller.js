@@ -139,7 +139,9 @@ module.exports = {
       const table = await Tables.findOne({
         tableNumber: req.params.tableNumber,
       });
-      fs.unlink(`../../public/images/qrcode/table${req.params.tableNumber}`);
+      fs.unlink(
+        `../../public/images/qrcode/table${req.params.tableNumber}.png`
+      );
       await Orderlists.findByIdAndUpdate(table.orderList, {
         $set: { order: [] },
       });
