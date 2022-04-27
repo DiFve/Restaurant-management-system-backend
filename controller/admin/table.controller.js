@@ -135,22 +135,26 @@ module.exports = {
     } catch (error) {}
   },
   confirmCashOut: async (req, res) => {
-    try {
-      const table = await Tables.findOne({
+    // try {
+    const table = await Tables.findOne({
+      tableNumber: req.params.tableNumber,
+    });
+    fs.unlink(
+      `public/images/qrcode/table${req.params.tableNumber}.png`,
+      (err) => {
+        if (err) throw err;
+      }
+    );
+    await Orderlists.findByIdAndUpdate(table.orderList, {
+      $set: { order: [] },
+    });
+    await Tables.findOneAndUpdate(
+      {
         tableNumber: req.params.tableNumber,
-      });
-      // fs.unlink(
-      //   `../../public/images/qrcode/table${req.params.tableNumber}.png`
-      // );
-      await Orderlists.findByIdAndUpdate(table.orderList, {
-        $set: { order: [] },
-      });
-      await Tables.findOneAndUpdate(
-        {
-          tableNumber: req.params.tableNumber,
-        },
-        { status: "available" }
-      );
-    } catch (error) {}
+      },
+      { status: "available" }
+    );
+    res.status(200).json({ message: "success" });
+    //} catch (error) {}
   },
 };
