@@ -2,7 +2,7 @@ const Orderlists = require("../../model/orderlist");
 const Tables = require("../../model/table");
 const Foods = require("../../model/food");
 const Cart = require("../../model/cart");
-
+const fs = require("fs");
 module.exports = {
   makeTable: async (req, res) => {
     const { tableNumber, tableType, orderList, cart, status } = req.body;
@@ -139,6 +139,7 @@ module.exports = {
       const table = await Tables.findOne({
         tableNumber: req.params.tableNumber,
       });
+      fs.unlink(`../../public/images/qrcode/table${req.params.tableNumber}`);
       await Orderlists.findByIdAndUpdate(table.orderList, {
         $set: { order: [] },
       });
