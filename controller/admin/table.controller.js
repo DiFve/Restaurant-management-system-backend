@@ -152,7 +152,7 @@ module.exports = {
       {
         tableNumber: req.params.tableNumber,
       },
-      { status: "available" }
+      { status: "available", tableType: "none" }
     );
     res.status(200).json({ message: "success" });
     //} catch (error) {}
